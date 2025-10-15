@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  sam-service:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - MODEL_TYPE=vit_h
+      - DEVICE=cuda
+    volumes:
+      - ./models:/app/models
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
