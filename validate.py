@@ -4,14 +4,14 @@ Validate Python code structure without requiring dependencies.
 """
 import ast
 import sys
+from pathlib import Path
+import glob
 
-files_to_check = [
-    'main.py',
-    'model.py', 
-    'config.py',
-    'test_service.py',
-    'example_client.py'
-]
+# Find all Python files in the project root (excluding hidden dirs and __pycache__)
+files_to_check = sorted([
+    str(f) for f in Path('.').glob('*.py')
+    if not f.name.startswith('_') and f.name != 'validate.py'
+])
 
 print('Validating Python syntax...')
 print('=' * 50)
